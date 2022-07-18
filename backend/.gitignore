@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Vagrant and Ansible####
+.Vagrant
+Vagrantfile
+ansible/
