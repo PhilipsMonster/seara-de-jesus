@@ -33,6 +33,6 @@ build/
 .vscode/
 
 ### Vagrant and Ansible####
-.Vagrant
+.vagrant/
 Vagrantfile
 ansible/
