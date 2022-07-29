@@ -27,11 +27,8 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Build Maven package
-        run: mvn --batch-mode --update-snapshots package
-        working-directory: backend
-        env:
-          MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
+      - name: Build project with Maven
+        run: mvn -B package --file pom.xml
         
       - name: Login to Heroku Container registry
         env: 
