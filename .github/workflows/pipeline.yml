@@ -27,27 +27,26 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Build Maven package
-        run: mvn --batch-mode --update-snapshots package
+      - name: Build
+        run: mvn -B package --file pom.xml
         working-directory: backend
-        env:
-          MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
-        
+
+      - name: Create build path staging
+        run: mkdir staging && cp target/*.jar staging
+
+      - name: Upload math result for job
+        uses: actions/upload-artifact@v1
+        with:
+          name: example_github_actions
+          path: staging
+
       - name: Login to Heroku Container registry
         env: 
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: heroku container:login
 
-      - name: Docker Build Image & Push Heroku Registry
+      - name: Build and push
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web
-      
-  DeployHom:
-    needs: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web 
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+        run: heroku plugins:install java && heroku create --no-remote && heroku deploy:jar staging/githubactions-0.0.1-SNAPSHOT.jar --app ${{ secrets.HEROKU_APP_NAME }}
