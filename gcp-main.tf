@@ -5,7 +5,7 @@ resource "google_cloud_run_service" "default" {
   template {
     spec {
       containers {
-        image = "${{ secrets.ARTIFACT_REGISTRY }}/seara:latest"
+        image = ${{ secrets.ARTIFACT_REGISTRY }}/seara:latest
       }
     }
 
