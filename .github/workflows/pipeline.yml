@@ -54,7 +54,8 @@ jobs:
         run: | 
           docker build -t ${{ secrets.ARTIFACT_REGISTRY }}/seara:latest .
           docker push ${{ secrets.ARTIFACT_REGISTRY }}/seara:latest
-      
+  
+  
   DeployHom:
     needs: Build
     runs-on: ubuntu-latest
