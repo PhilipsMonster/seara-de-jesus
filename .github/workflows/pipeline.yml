@@ -5,7 +5,7 @@ name: MainToHomolog
 on: 
   push:
     branches:
-      - main
+      - hom
 
 jobs:
   build:
