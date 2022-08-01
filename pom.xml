@@ -15,11 +15,9 @@
 	<description>Seara de Jesus</description>
 	<properties>
 		<java.version>11</java.version>
-	</properties>
-	<properties>
-        <sonar.organization>philipsmonster</sonar.organization>
+		<sonar.organization>philipsmonster</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    </properties>
+	</properties>	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
